@@ -248,11 +248,61 @@ $(document).ready(function() {
 
         var tr = $(this).parents('tr');
 
-        var unit_price_inc_tax = __read_number(tr.find('input.pos_unit_price_inc_tax'));
+        
+
+        var old_unit_price_inc_tax = __read_number(tr.find('input.pos_line_default'));
+        var line_dicount = __read_number(tr.find('input.line_discount_amount'));
+        unit_price_inc_tax = old_unit_price_inc_tax - ((line_dicount*old_unit_price_inc_tax)/100);
         var line_total = entered_qty * unit_price_inc_tax;
+
+        var discount_full = ((line_dicount*old_unit_price_inc_tax)/100) * entered_qty;
+        __write_number(tr.find('input.pos_line_dicount_full'), discount_full, false, 2);
+
+        __write_number(tr.find('input.pos_line_mainprice_full'), old_unit_price_inc_tax, false, 2);
+
 
         __write_number(tr.find('input.pos_line_total'), line_total, false, 2);
         tr.find('span.pos_line_total_text').text(__currency_trans_from_en(line_total, true));
+
+        pos_total_row();
+
+        adjustComboQty(tr);
+    });
+
+    //Update Discount by mamun
+    $('table#pos_table tbody').on('change', 'input.line_discount_amount', function() {
+        
+        if (sell_form_validator) {
+            sell_form_validator.element($(this));
+        }
+        if (pos_form_validator) {
+            pos_form_validator.element($(this));
+        }
+
+        var tr = $(this).parents('tr');
+        // var max_qty = parseFloat($(this).data('rule-max'));
+
+        var line_dicount = __read_number($(this));
+        var quantity = __read_number(tr.find('input.pos_quantity'));
+
+        
+
+        var old_unit_price_inc_tax = __read_number(tr.find('input.pos_line_default'));
+        var unit_price_inc_tax = old_unit_price_inc_tax - ((line_dicount*old_unit_price_inc_tax)/100);
+        var line_total = quantity * unit_price_inc_tax;
+
+        var discount_full = ((line_dicount*old_unit_price_inc_tax)/100) * quantity;
+        __write_number(tr.find('input.pos_line_dicount_full'), discount_full, false, 2);
+
+
+        // __write_number(tr.find('input.pos_line_mainprice_full'), line_total, false, 2);
+        __write_number(tr.find('input.pos_line_mainprice_full'), old_unit_price_inc_tax, false, 2);
+
+
+        __write_number(tr.find('input.pos_line_total'), line_total, false, 2);
+        tr.find('span.pos_line_total_text').text(__currency_trans_from_en(line_total, true));
+
+        // console.log(discount_full, old_unit_price_inc_tax, line_total);
 
         pos_total_row();
 
@@ -278,6 +328,8 @@ $(document).ready(function() {
 
         __write_number(tr.find('input.pos_unit_price_inc_tax'), unit_price_inc_tax);
         __write_number(tr.find('input.pos_line_total'), line_total, false, 2);
+
+
         tr.find('span.pos_line_total_text').text(__currency_trans_from_en(line_total, true));
         pos_each_row(tr);
         pos_total_row();
@@ -427,6 +479,8 @@ $(document).ready(function() {
             .remove();
         pos_total_row();
     });
+
+
 
     //Cancel the invoice
     $('button#pos-cancel').click(function() {
@@ -1031,7 +1085,42 @@ $(document).ready(function() {
     });
 
     $('select#price_group').change(function() {
-        $('input#hidden_price_group').val($(this).val());
+        //If types of service selected then price group dropdown has no effect
+        if ($('#types_of_service_price_group').length > 0 && 
+            $('#types_of_service_price_group').val()) {
+            return false;
+        }
+        var curr_val = $(this).val();
+        var prev_value = $('input#hidden_price_group').val();
+        $('input#hidden_price_group').val(curr_val);
+        if (curr_val != prev_value && $('table#pos_table tbody tr').length > 0) {
+            swal({
+                title: LANG.sure,
+                text: LANG.form_will_get_reset,
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+            }).then(willDelete => {
+                if (willDelete) {
+                    if ($('form#edit_pos_sell_form').length > 0) {
+                        $('table#pos_table tbody').html('');
+                        pos_total_row();
+                    } else {
+                        reset_pos_form();
+                    }
+
+                    $('input#hidden_price_group').val(curr_val);
+                    $('select#price_group')
+                        .val(curr_val)
+                        .change();
+                } else {
+                    $('input#hidden_price_group').val(prev_value);
+                    $('select#price_group')
+                        .val(prev_value)
+                        .change();
+                }
+            });
+        }
     });
 
     //Quick add product
@@ -1448,10 +1537,16 @@ function pos_each_row(row_obj) {
 
 function pos_total_row() {
     var total_quantity = 0;
-    var price_total = get_subtotal();
+    var price_total = 0;
 
     $('table#pos_table tbody tr').each(function() {
         total_quantity = total_quantity + __read_number($(this).find('input.pos_quantity'));
+        price_total = price_total + __read_number($(this).find('input.pos_line_total'));
+    });
+
+    //Go through the modifier prices.
+    $('input.modifiers_price').each(function() {
+        price_total = price_total + __read_number($(this));
     });
 
     //updating shipping charges
@@ -1466,21 +1561,6 @@ function pos_total_row() {
     //$('span.unit_price_total').html(unit_price_total);
     $('span.price_total').html(__currency_trans_from_en(price_total, false));
     calculate_billing_details(price_total);
-}
-
-function get_subtotal() {
-    var price_total = 0;
-
-    $('table#pos_table tbody tr').each(function() {
-        price_total = price_total + __read_number($(this).find('input.pos_line_total'));
-    });
-
-    //Go through the modifier prices.
-    $('input.modifiers_price').each(function() {
-        price_total = price_total + __read_number($(this));
-    });
-
-    return price_total;
 }
 
 function calculate_billing_details(price_total) {
@@ -1510,6 +1590,8 @@ function calculate_billing_details(price_total) {
     }
 
     var total_payable = price_total + order_tax - discount + shipping_charges + packing_charge;
+    //round-new
+    total_payable = Math.round(total_payable);
 
     var rounding_multiple = $('#amount_rounding_method').val() ? parseFloat($('#amount_rounding_method').val()) : 0;
     var round_off_data = __round(total_payable, rounding_multiple);
@@ -1600,7 +1682,8 @@ function calculate_balance_due() {
     $('span.total_paying').text(__currency_trans_from_en(total_paying, true));
 
     __write_number($('input#in_balance_due'), bal_due);
-    $('span.balance_due').text(__currency_trans_from_en(bal_due, true));
+    // $('span.balance_due').text(__currency_trans_from_en(bal_due, true));
+    $('span.balance_due').text(__currency_trans_from_en(bal_due, false));
 
     __highlight(bal_due * -1, $('span.balance_due'));
     __highlight(change_return * -1, $('span.change_return_span'));
@@ -1685,8 +1768,8 @@ function reset_pos_form(){
 function set_default_customer() {
     var default_customer_id = $('#default_customer_id').val();
     var default_customer_name = $('#default_customer_name').val();
-    var exists = default_customer_id ? $('select#customer_id option[value=' + default_customer_id + ']').length : 0;
-    if (exists == 0 && default_customer_id) {
+    var exists = $('select#customer_id option[value=' + default_customer_id + ']').length;
+    if (exists == 0) {
         $('select#customer_id').append(
             $('<option>', { value: default_customer_id, text: default_customer_name })
         );
@@ -2134,16 +2217,9 @@ function validate_discount_field() {
         discount_element = $('#discount_amount');
         discount_type_element = $('#discount_type');
     }
-    var max_value = parseFloat(discount_element.data('max-discount'));
-    if (discount_element.val() != '' && !isNaN(max_value)) {
-        if (discount_type_element.val() == 'fixed') {
-            var subtotal = get_subtotal();
-            //get max discount amount
-            max_value = __calculate_amount('percentage', max_value, subtotal)
-        }
-
+    if (discount_type_element.val() == 'percentage' && discount_element.val() != '') {
         discount_element.rules('add', {
-            'max-value': max_value,
+            'max-value': parseFloat(discount_element.data('max-discount')),
             messages: {
                 'max-value': discount_element.data('max-discount-error_msg'),
             },

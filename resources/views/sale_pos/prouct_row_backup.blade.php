@@ -242,7 +242,7 @@
 			$subtotal_type = !empty($pos_settings['is_pos_subtotal_editable']) ? 'text' : 'hidden';
 
 		@endphp
-		<input type="{{$subtotal_type}}" class="form-control pos_line_default_mamun @if(!empty($pos_settings['is_pos_subtotal_editable'])) input_number @endif" value="{{@num_format($product->quantity_ordered*$unit_price_inc_tax )}}">
+		<input type="{{$subtotal_type}}" class="form-control pos_line_default @if(!empty($pos_settings['is_pos_subtotal_editable'])) input_number @endif" value="{{@num_format($product->quantity_ordered*$unit_price_inc_tax )}}">
 		<span class="display_currency pos_line_default_total @if(!empty($pos_settings['is_pos_subtotal_editable'])) hide @endif" data-currency_symbol="false">{{$product->quantity_ordered*$unit_price_inc_tax}}</span>
 	</td>
 	<td class="text-center v-center" style="width: 10%;">
@@ -250,8 +250,8 @@
 			$subtotal_type = !empty($pos_settings['is_pos_subtotal_editable']) ? 'text' : 'hidden';
 
 		@endphp
-		<!-- <input type="text" class="form-control pos_line_dicount_mamun @if(!empty($pos_settings['is_pos_subtotal_editable'])) input_number @endif" value="{{@num_format($product->quantity_ordered*$unit_price_inc_tax )}}"> -->
-		<input type="text" class="form-control pos_line_dicount_percent_mamun " name="products[{{$row_count}}][pos_line_dicount_percent_mamun]">
+		<!-- <input type="text" class="form-control pos_line_dicount @if(!empty($pos_settings['is_pos_subtotal_editable'])) input_number @endif" value="{{@num_format($product->quantity_ordered*$unit_price_inc_tax )}}"> -->
+		<input type="text" class="form-control line_discount_amount " name="products[{{$row_count}}][line_discount_amount]">
 		<!-- <span class="display_currency pos_line_total_text @if(!empty($pos_settings['is_pos_subtotal_editable'])) hide @endif" data-currency_symbol="true">{{$product->quantity_ordered*$unit_price_inc_tax}}</span> -->
 	</td>
 	<td class="text-center v-center" >
@@ -267,15 +267,15 @@
 			$subtotal_type = !empty($pos_settings['is_pos_subtotal_editable']) ? 'text' : 'hidden';
 
 		@endphp
-		<!-- <input type="text" class="form-control pos_line_dicount_mamun @if(!empty($pos_settings['is_pos_subtotal_editable'])) input_number @endif" value="{{@num_format($product->quantity_ordered*$unit_price_inc_tax )}}"> -->
-		<input type="text" readonly class="form-control pos_line_dicount_full_mamun " name="products[{{$row_count}}][pos_line_dicount_full_mamun]">
+		<!-- <input type="text" class="form-control pos_line_dicount @if(!empty($pos_settings['is_pos_subtotal_editable'])) input_number @endif" value="{{@num_format($product->quantity_ordered*$unit_price_inc_tax )}}"> -->
+		<input type="text" readonly class="form-control pos_line_dicount_full " name="products[{{$row_count}}][pos_line_dicount_full]">
 		<!-- <span class="display_currency pos_line_total_text @if(!empty($pos_settings['is_pos_subtotal_editable'])) hide @endif" data-currency_symbol="true">{{$product->quantity_ordered*$unit_price_inc_tax}}</span> -->
 	</td>
 
 	<td style="display: none;">
 		
-		<!-- <input type="text" class="form-control pos_line_dicount_mamun @if(!empty($pos_settings['is_pos_subtotal_editable'])) input_number @endif" value="{{@num_format($product->quantity_ordered*$unit_price_inc_tax )}}"> -->
-		<input type="hidden" class="form-control pos_line_mainprice_full_mamun " name="products[{{$row_count}}][pos_line_mainprice_full_mamun]">
+		<!-- <input type="text" class="form-control pos_line_dicount @if(!empty($pos_settings['is_pos_subtotal_editable'])) input_number @endif" value="{{@num_format($product->quantity_ordered*$unit_price_inc_tax )}}"> -->
+		<input type="hidden" class="form-control pos_line_mainprice_full " name="products[{{$row_count}}][pos_line_mainprice_full]">
 		<!-- <span class="display_currency pos_line_total_text @if(!empty($pos_settings['is_pos_subtotal_editable'])) hide @endif" data-currency_symbol="true">{{$product->quantity_ordered*$unit_price_inc_tax}}</span> -->
 	</td>
 

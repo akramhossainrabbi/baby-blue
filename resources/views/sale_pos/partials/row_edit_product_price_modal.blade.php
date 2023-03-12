@@ -11,7 +11,7 @@
 						<input type="text" name="products[{{$row_count}}][unit_price]" class="form-control pos_unit_price input_number mousetrap" value="{{@num_format(!empty($product->unit_price_before_discount) ? $product->unit_price_before_discount : $product->default_sell_price)}}">
 				</div>
 				@php
-					$discount_type = !empty($product->line_discount_type) ? $product->line_discount_type : 'fixed';
+					$discount_type = !empty($product->line_discount_type) ? $product->line_discount_type : 'percentage';
 					$discount_amount = !empty($product->line_discount_amount) ? $product->line_discount_amount : 0;
 					
 					if(!empty($discount)) {

@@ -1,14 +1,14 @@
 <div class="row">
 	<div class="col-md-4">
-		<div class="form-group">
+		<div class="form-group" style="width: 100% !important">
 			<div class="input-group">
 				<span class="input-group-addon">
 					<i class="fa fa-user"></i>
 				</span>
 				<input type="hidden" id="default_customer_id" 
-				value="{{ $walk_in_customer['id'] ?? ''}}" >
+				value="{{ $walk_in_customer['id']}}" >
 				<input type="hidden" id="default_customer_name" 
-				value="{{ $walk_in_customer['name'] ?? ''}}" >
+				value="{{ $walk_in_customer['name']}}" >
 				{!! Form::select('contact_id', 
 					[], null, ['class' => 'form-control mousetrap', 'id' => 'customer_id', 'placeholder' => 'Enter Customer name / phone', 'required', 'style' => 'width: 100%;']); !!}
 				<span class="input-group-btn">
@@ -51,8 +51,8 @@
 		</div>
 	</div>
 	@endif
-	<input type="hidden" name="pay_term_number" id="pay_term_number" value="{{$walk_in_customer['pay_term_number'] ?? ''}}">
-	<input type="hidden" name="pay_term_type" id="pay_term_type" value="{{$walk_in_customer['pay_term_type'] ?? ''}}">
+	<input type="hidden" name="pay_term_number" id="pay_term_number" value="{{$walk_in_customer['pay_term_number']}}">
+	<input type="hidden" name="pay_term_type" id="pay_term_type" value="{{$walk_in_customer['pay_term_type']}}">
 	
 	@if(!empty($commission_agent))
 		<div class="col-md-4">
@@ -98,7 +98,7 @@
 						$selected_price_group = !empty($default_price_group_id) && array_key_exists($default_price_group_id, $price_groups) ? $default_price_group_id : null;
 					@endphp
 					{!! Form::hidden('hidden_price_group', key($price_groups), ['id' => 'hidden_price_group']) !!}
-					{!! Form::select('price_group', $price_groups, $selected_price_group, ['class' => 'form-control select2', 'id' => 'price_group']); !!}
+					{!! Form::select('price_group', $price_groups, $selected_price_group, ['class' => 'form-control select2', 'id' => 'price_group', 'style' => 'width: 100%;']); !!}
 					<span class="input-group-addon">
 						@show_tooltip(__('lang_v1.price_group_help_text'))
 					</span> 
@@ -134,14 +134,6 @@
 			</div>
 		</div>
 		<div class="modal fade types_of_service_modal" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel"></div>
-	@endif
-
-	@if(!empty($pos_settings['show_invoice_scheme']))
-		<div class="col-md-4 col-sm-6">
-			<div class="form-group">
-				{!! Form::select('invoice_scheme_id', $invoice_schemes, $default_invoice_schemes->id, ['class' => 'form-control', 'placeholder' => __('lang_v1.select_invoice_scheme')]); !!}
-			</div>
-		</div>
 	@endif
 	<!-- Call restaurant module if defined -->
     @if(in_array('tables' ,$enabled_modules) || in_array('service_staff' ,$enabled_modules))
@@ -196,8 +188,17 @@
 					<th class="text-center col-md-2 {{$hide_tax}}">
 						@lang('sale.price_inc_tax')
 					</th>
-					<th class="text-center col-md-2">
+					<th class="text-center">
+						@lang('sale.actual_value')
+					</th>
+					<th class="text-center">
+						@lang('sale.discount')
+					</th>
+					<th class="text-center">
 						@lang('sale.subtotal')
+					</th>
+					<th class="text-center">
+					@lang('sale.discount_tk')
 					</th>
 					<th class="text-center"><i class="fas fa-times" aria-hidden="true"></i></th>
 				</tr>

@@ -26,13 +26,28 @@
 	        if(session()->get('business.enable_inline_tax') == 1){
 	            $hide_tax = '';
 	        }
-	        
 			$tax_id = $product->tax_id;
 			$item_tax = !empty($product->item_tax) ? $product->item_tax : 0;
 			$unit_price_inc_tax = $product->sell_price_inc_tax;
 			if($hide_tax == 'hide'){
 				$tax_id = null;
-				$unit_price_inc_tax = $product->default_sell_price;
+				$unit_price_inc_tax = $product->sell_price_inc_tax;
+			}
+
+		@endphp
+
+		@php
+			if( request()->segment(1)=='sells' && request()->segment(3)=='edit'){
+				$hide_tax = 'hide';
+				if(session()->get('business.enable_inline_tax') == 1){
+					$hide_tax = '';
+				}
+				$tax_id = $product->tax_id;
+				$item_tax = !empty($product->item_tax) ? $product->item_tax : 0;
+				$unit_price_inc_tax = $product->sell_price_inc_tax;
+				if($hide_tax == 'hide'){
+				$tax_id = null;
+				}
 			}
 		@endphp
 
@@ -235,16 +250,82 @@
 		</td>
 	@endif
 	<td class="{{$hide_tax}}">
-		<input type="text" name="products[{{$row_count}}][unit_price_inc_tax]" class="form-control pos_unit_price_inc_tax input_number" value="{{@num_format($unit_price_inc_tax)}}" @if(!$edit_price) readonly @endif @if(!empty($pos_settings['enable_msp'])) data-rule-min-value="{{$unit_price_inc_tax}}" data-msg-min-value="{{__('lang_v1.minimum_selling_price_error_msg', ['price' => @num_format($unit_price_inc_tax)])}}" @endif>
+		<input type="text" name="products[{{$row_count}}][unit_price_inc_tax]" 
+		class="form-control pos_unit_price_inc_tax input_number" 
+		value="{{@num_format($unit_price_inc_tax)}}" 
+		@if(!$edit_price) readonly 
+		@endif 
+		@if(!empty($pos_settings['enable_msp'])) 
+		data-rule-min-value="{{$unit_price_inc_tax}}" 
+		data-msg-min-value="{{__('lang_v1.minimum_selling_price_error_msg', ['price' => @num_format($unit_price_inc_tax)])}}" 
+		@endif>
 	</td>
 	<td class="text-center v-center">
+		@php
+			$subtotal_type = !empty($pos_settings['is_pos_subtotal_editable']) ? 'text' : 'hidden';
+			$discount_amount = 100 - $product->line_discount_amount;
+		@endphp
+		<input type="{{$subtotal_type}}" 
+		class="form-control pos_line_default 
+		@if(!empty($pos_settings['is_pos_subtotal_editable'])) input_number 
+		@endif" 
+		value="{{@num_format((($product->quantity_ordered*$unit_price_inc_tax) *100 ) / $discount_amount )}}">
+		
+		<span class="display_currency pos_line_default_total 
+		@if(!empty($pos_settings['is_pos_subtotal_editable'])) hide 
+		@endif" data-currency_symbol="false">
+		{{ (($product->quantity_ordered*$unit_price_inc_tax) *100 ) / $discount_amount }}
+		</span>
+	</td>
+	<td class="text-center v-center" style="width: 10%;">
+		@php
+			$subtotal_type = !empty($pos_settings['is_pos_subtotal_editable']) ? 'text' : 'hidden';
+
+		@endphp
+		<!-- <input type="text" class="form-control pos_line_dicount @if(!empty($pos_settings['is_pos_subtotal_editable'])) input_number @endif" value="{{@num_format($product->quantity_ordered*$unit_price_inc_tax )}}"> -->
+		<input type="text" 
+		class="form-control line_discount_amount " 
+		name="products[{{$row_count}}][line_discount_amount]"
+		@if(request()->segment(1)=='sells' && request()->segment(3)=='edit')
+		value="{{ $product->line_discount_amount }}"
+		@endif
+		>
+		<!-- <span class="display_currency pos_line_total_text @if(!empty($pos_settings['is_pos_subtotal_editable'])) hide @endif" data-currency_symbol="true">{{$product->quantity_ordered*$unit_price_inc_tax}}</span> -->
+	</td>
+	<td class="text-center v-center" >
 		@php
 			$subtotal_type = !empty($pos_settings['is_pos_subtotal_editable']) ? 'text' : 'hidden';
 
 		@endphp
 		<input type="{{$subtotal_type}}" class="form-control pos_line_total @if(!empty($pos_settings['is_pos_subtotal_editable'])) input_number @endif" value="{{@num_format($product->quantity_ordered*$unit_price_inc_tax )}}">
-		<span class="display_currency pos_line_total_text @if(!empty($pos_settings['is_pos_subtotal_editable'])) hide @endif" data-currency_symbol="true">{{$product->quantity_ordered*$unit_price_inc_tax}}</span>
+		<span class="display_currency pos_line_total_text @if(!empty($pos_settings['is_pos_subtotal_editable'])) hide @endif" data-currency_symbol="false">{{$product->quantity_ordered*$unit_price_inc_tax}}</span>
 	</td>
+	<td class="text-center v-center" style="width: 10%;">
+		@php
+			$subtotal_type = !empty($pos_settings['is_pos_subtotal_editable']) ? 'text' : 'hidden';
+
+		@endphp
+		<!-- <input type="text" class="form-control pos_line_dicount @if(!empty($pos_settings['is_pos_subtotal_editable'])) input_number @endif" value="{{@num_format($product->quantity_ordered*$unit_price_inc_tax )}}"> -->
+		<input type="text" readonly class="form-control pos_line_dicount_full " name="products[{{$row_count}}][pos_line_dicount_full]" 
+		@if(request()->segment(1)=='sells' && request()->segment(3)=='edit')
+			value="{{  ((($product->quantity_ordered*$unit_price_inc_tax) *100 ) / $discount_amount) -  ($product->quantity_ordered*$unit_price_inc_tax) }}"
+		@endif>
+		<!-- <span class="display_currency pos_line_total_text @if(!empty($pos_settings['is_pos_subtotal_editable'])) hide @endif" data-currency_symbol="true">{{$product->quantity_ordered*$unit_price_inc_tax}}</span> -->
+	</td>
+
+	<td style="display: none;">
+		
+		<!-- <input type="text" class="form-control pos_line_dicount @if(!empty($pos_settings['is_pos_subtotal_editable'])) input_number @endif" value="{{@num_format($product->quantity_ordered*$unit_price_inc_tax )}}"> -->
+		<input type="hidden" class="form-control pos_line_mainprice_full " name="products[{{$row_count}}][pos_line_mainprice_full]">
+		<!-- <span class="display_currency pos_line_total_text @if(!empty($pos_settings['is_pos_subtotal_editable'])) hide @endif" data-currency_symbol="true">{{$product->quantity_ordered*$unit_price_inc_tax}}</span> -->
+	</td>
+
+
+	
+	
+
+	
+	
 	<td class="text-center">
 		<i class="fa fa-times text-danger pos_remove_row cursor-pointer" aria-hidden="true"></i>
 	</td>

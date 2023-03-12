@@ -256,6 +256,7 @@ $shipping_charges = preg_replace('/[^0-9.]/','',$receipt_details->shipping_charg
 					<th class="text-center" style="color: #222;font-size: 10px;">{{$receipt_details->table_product_label}}</th>
 					<th class="text-center" style="color: #222;font-size: 10px;">{{$receipt_details->table_qty_label}}</th>
 					<th class="text-center" style="color: #222;font-size: 10px;">{{$receipt_details->table_unit_price_label}}</th>
+					<th class="text-center" style="color: #222;font-size: 10px;">{{$receipt_details->line_discount_label}}</th>
 					<th class="text-center" style="color: #222;font-size: 10px;">{{$receipt_details->table_subtotal_label}}</th>
 				</tr>
 			</thead>
@@ -279,6 +280,7 @@ $shipping_charges = preg_replace('/[^0-9.]/','',$receipt_details->shipping_charg
                         </td>
 						<td class="text-center">{{$line['quantity']}} </td>
 						<td class="text-center">{{$line['unit_price_inc_tax']}}</td>
+						<td class="text-center">{{$line['line_discount']}}</td>
 						<td class="text-center">{{$line['line_total']}}</td>
 					</tr>
 					@if(!empty($line['modifiers']))
@@ -291,6 +293,7 @@ $shipping_charges = preg_replace('/[^0-9.]/','',$receipt_details->shipping_charg
 		                        </td>
 								<td class="text-center">{{$modifier['quantity']}} {{$modifier['units']}} </td>
 								<td class="text-center">{{$modifier['unit_price_inc_tax']}}</td>
+								<td class="text-center">{{$modifier['line_discount']}}</td>
 								<td class="text-center">{{$modifier['line_total']}}</td>
 							</tr>
 						@endforeach
@@ -433,6 +436,20 @@ $shipping_charges = preg_replace('/[^0-9.]/','',$receipt_details->shipping_charg
 					@endif
 
 					<!-- Total -->
+					@php
+						$discount = intval(str_replace(',', '', $receipt_details->subtotal))-intval(str_replace(',', '', $receipt_details->total_paid));
+					@endphp
+						<!-- Total Discount-->
+					@if($discount > 0)
+						<tr style="border:1px 0 solid black">
+							<th  style="text-align:left;color: #222;font-size: 10px;">
+							Discount:
+							</th>
+							<td class="text-right"  style="color: #222;font-size: 10px;">
+								{{ number_format($discount, 2) }}
+							</td>
+						</tr>
+					@endif
 					
 					<!-- Total Paid-->
 					@if(!empty($receipt_details->total_paid))

@@ -1,0 +1,12 @@
+{
+    "name": "nptl/timezones",
+    "description": "This is my first package. It use for timezones",
+    "authors": [
+        {
+            "name": "Next Page Technology Ltd.",
+            "email": "nextpagetl@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}

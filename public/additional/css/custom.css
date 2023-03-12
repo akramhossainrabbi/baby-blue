@@ -1,0 +1,433 @@
+.container {
+    /*width: 1300px;*/
+}
+.header{
+    background: #fff;
+}
+.ads-style{
+    width: 100%;
+}
+.video-panel{
+    margin-top: 29px;
+}
+.image-style{
+    width: 100%;
+}
+.m-log{
+    margin-bottom: 15px;
+    border-radius: 50px;
+}
+.m-label{
+    font-style: italic;
+    margin-bottom: 5px;
+}
+.m-label span{
+    color: red;
+}
+.panel-style{
+    padding: 30px;
+}
+
+
+
+
+
+    .calendar-7 {
+  position: absolute;
+  width: 376px;
+  background-color: #a295e5;
+  padding: 8px
+}
+
+.calendar-7 .days {
+  color: white;
+  font: 14px normal;
+  width: 100%;
+  text-align: center
+}
+
+.calendar-7 .days .calendar-7-day {
+  display: inline-block;
+  cursor: pointer;
+  width: 13%;
+  height: 55px;
+  padding-top: 8px;
+  margin-bottom: 8px
+}
+
+.calendar-7 .days .calendar-7-day:hover, .calendar-7 .days .calendar-7-day.active { background-color: #f68c26 }
+
+.calendar-7 .hours, .calendar-7 .minutes {
+  background-color: white;
+  width: 360px;
+  height: 162px;
+  margin: 0 auto;
+  border-radius: 4px
+}
+
+.calendar-7 .minutes {
+  display: none;
+  height: 81px
+}
+
+.calendar-7 .calendar-7-hour, .calendar-7 .calendar-7-minute {
+  float: left;
+  display: inline-block;
+  box-sizing: border-box;
+  width: 25%;
+  font: 14px normal;
+  padding: 4px;
+  color: #4a4a4a;
+  text-align: center;
+  cursor: pointer
+}
+
+.calendar-7 .calendar-7-hour:hover, .calendar-7 .calendar-7-minute:hover, .calendar-7 .calendar-7-hour.active, .calendar-7 .active.calendar-7-minute {
+  background-color: #a295e5;
+  color: white;
+  border-radius: 3px
+}
+
+.calendar-7 .calendar-7-hour.disabled, .calendar-7 .disabled.calendar-7-minute {
+      color: #ececec;
+    background-color: #d2d2d2;
+    cursor: not-allowed;
+}
+
+
+.close-style-ex {
+    background: black !important;
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 18px;
+    margin-top: 14px;
+}
+.close-style-ex:hover{
+    background:red !important;
+}
+.button-style{
+    border-radius: 50px;
+}
+.modal-content{
+    border-radius: 15px;
+}
+
+/*---------Login modal-------------------*/
+.modal-content {
+    border-radius: 4px;
+}
+
+.modal-header .close {
+    margin-top: 0;
+    color: #fff;
+    opacity: 1;
+}
+
+small.magestore-loign-h3 {
+    margin-bottom: 10px;
+    font-family: 'tahoma', Arial, Helvetica, sans-serif;
+    font-size: 21px;
+    padding-bottom: 3px;
+    text-transform: uppercase;
+    text-align: center;
+    color: #000;
+    display: block;
+    font-weight: 700;
+    margin-top: 10px;
+}
+
+#magestore-login-social {
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+div#fblogin, div#googlelogin {
+    display: inline-block;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+#label-popup-signupform {
+    /*width: 600px;*/
+    padding: 0 10px;
+}
+
+.label-popup-loginform {
+    /*width: 600px;*/
+    padding: 0 10px;
+    margin: 0 auto;
+}
+
+.formOr {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    text-align: center;
+    vertical-align: middle;
+    display: block;
+    color: #fff;
+    background: #c49d70;
+    margin: 0 auto;
+    line-height: 40px;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.signup_email {
+    margin: 10px auto 10px auto;
+    max-width: 300px;
+}
+
+#label-popup-signupform .form-list input.input-text {
+    border: 1px solid #ccc;
+}
+
+.signup_email input {
+    margin-bottom: 5px;
+}
+
+#registerloginform .form-list {
+    margin-bottom: 2px;
+    position: relative;
+}
+
+button#signupform_email {
+    font-family: 'Didot';
+    line-height: 33px;
+    height: 33px;
+    padding: 0 16px;
+    font-size: 14px;
+    font-weight: 300;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    width: 100%;
+    margin: 6px 0;
+    float: none;
+    box-shadow: none;
+    border: none;
+    text-transform: uppercase;
+    background: #c49d70;
+}
+
+.popupcondition p {
+    text-align: center;
+    font-size: 12px;
+    color: #000;
+}
+
+#label-popup-signupform .back-signup-link {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.back-signup-link {
+    margin-top: 20px;
+}
+
+.back-signup-link {
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+#label-popup-signupform .back-signup-link a {
+    color: #c69c6d;
+    text-decoration: underline;
+    font-weight: 700;
+}
+
+.logo-cont-divider {
+    display: block;
+    width: calc(100% - 300px);
+    position: relative;
+    margin: 0 auto;
+}
+
+.logo-cont-divider span {
+    display: block;
+    height: 24px;
+    width: 70px;
+    background: url(https://d8evit4zy2nlo.cloudfront.net/static/version1557148352/frontend/Kalki/default/en_US/images/popup-icon.png) no-repeat #fff center center;
+    margin: 20px auto;
+    position: relative;
+    z-index: 1;
+}
+
+.form-list {
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.newuser-link {
+    text-align: center;
+    padding: 10px 0;
+}
+
+.newuser-link a {
+    color: #c49d70;
+    font-size: 12px;
+}
+
+form#forgotPassword {
+    clear: both;
+    text-align: left;
+    max-width: 365px;
+    margin: 0 auto;
+}
+
+a.newsletterClick.sign_in {
+    color: #c29b6e;
+}
+#loginSigupPopup, .brand-logo{
+    text-align: center;
+}
+/*-----master file css-----------------*/
+#main-menu .dropdown-menu.container-fluid {
+    padding: 15px 17px;
+}
+
+.dropdown-menu > li > a {
+    display: block;
+    /*padding: 5px 2px;*/
+    clear: both;
+    font-weight: 400;
+    line-height: 1.42857143;
+    color: #333;
+    white-space: nowrap;
+}
+
+.option5 .product-list li .quick-view a.red {
+    background: #fa110d;
+}
+
+#loading {
+    background: url(/additional/images/loader.gif) no-repeat;
+    /*background: url(../images/loader.gif) no-repeat;*/
+    width: 80px;
+    height: 80px;
+    background-size: 80px 80px;
+    left: 46%;
+    top: 46%;
+    z-index: 9999;
+    position: fixed;
+
+}
+
+/*#loader {*/
+/*background: url(../frontend/images/loader/loader.gif) no-repeat;*/
+/*width: 80px;*/
+/*height: 80px;*/
+/*background-size: 80px 80px;*/
+/*position: fixed;*/
+/*left: 46%;*/
+/*top: 46%;*/
+/*z-index: 9999;*/
+/*}*/
+.error-notice {
+    font-size: 13px;
+    color: #ff0000;
+    margin-top: 10px;
+    display: block;
+    font-style: italic;
+    padding-left: 20px;
+    line-height: 1.2;
+}
+
+.success-notice {
+    font-size: 13px;
+    color: #008000;
+    margin-top: 10px;
+    display: block;
+    font-style: italic;
+    padding-left: 20px;
+    line-height: 1.2;
+}
+
+/*-----------*/
+/*--------- login socail ------*/
+/*--------- login socail ------*/
+.login-socail-form {
+    margin: 42px 0 0px;
+}
+
+.login-socail-form .or {
+    display: block;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    text-align: center;
+    margin: auto;
+    background: #5165a3;
+    color: #FFFFFF;
+    font-weight: 700;
+    font-size: 18px;
+    padding: 14px 0;
+    margin-bottom: 30px;
+}
+
+.login-socail-form ul {
+    padding: 0;
+    text-align: center;
+}
+
+.login-socail-form ul li {
+    display: inline-block;
+    list-style: none;
+    border-radius: 25px;
+    text-align: left;
+    background: #000;
+    margin: 0 6px;
+    transition: all ease 500ms;
+    position: relative;
+}
+
+.login-socail-form ul li a {
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: left;
+    transition: all ease 500ms;
+    display: block;
+}
+
+.login-socail-form ul li span {
+    transform: scale(0);
+    opacity: 0;
+    transition: all ease 500ms;
+    position: absolute;
+    font-size: 14px;
+    font-weight: 600;
+    z-index: 1;
+    right: 12px;
+    top: 11px;
+}
+
+.login-socail-form ul li:hover span {
+    transform: scale(1);
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+.login-socail-form ul li.face {
+    background: #3b5998;
+}
+
+
+.login-socail-form ul li.goo {
+    background: #DD5044;
+}
+
+
+.login-socail-form ul li.twi {
+    background: #1DA1F2;
+    padding: 10px 12px;
+}
+
+
+.login-socail-form ul li.lin {
+    background: #0077b5;
+    padding: 10px 12px;
+}

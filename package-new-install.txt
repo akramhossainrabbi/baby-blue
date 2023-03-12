@@ -1,0 +1,114 @@
+composer require barryvdh/laravel-debugbar --dev
+composer require barryvdh/laravel-dompdf
+composer require brian2694/laravel-toastr
+composer require buzz/laravel-google-captcha
+composer require php-http/curl-client nyholm/psr7 php-http/message florianv/laravel-swap
+composer require gloudemans/shoppingcart
+composer require guzzlehttp/guzzle
+composer require intervention/image
+composer require laravel/socialite
+composer require maatwebsite/excel
+composer require nyholm/psr7
+composer require php-http/curl-client
+composer require php-http/message
+composer require predis/predis
+composer require spatie/laravel-db-snapshots
+composer require spatie/laravel-image-optimizer
+composer require paypal/rest-api-sdk-php:*
+
+Barryvdh\Debugbar\ServiceProvider::class,
+Barryvdh\DomPDF\ServiceProvider::class,
+Brian2694\Toastr\ToastrServiceProvider::class,
+Buzz\LaravelGoogleCaptcha\CaptchaServiceProvider,
+Swap\Laravel\SwapServiceProvider::class
+Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class
+Intervention\Image\ImageServiceProvider::class
+Maatwebsite\Excel\ExcelServiceProvider::class,
+
+'Debugbar' => Barryvdh\Debugbar\Facade::class,
+'PDF' => Barryvdh\DomPDF\Facade::class,
+'Toastr'  => Brian2694\Toastr\Facades\Toastr::class,
+'Swap' => Swap\Laravel\Facades\Swap::class
+'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
+'Image' => Intervention\Image\Facades\Image::class
+'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+
+
+php artisan vendor:publish --provider="Barryvdh\Debugbar\ServiceProvider"
+php artisan vendor:publish --provider="Barryvdh\DomPDF\ServiceProvider"
+php artisan vendor:publish
+php artisan vendor:publish --provider="Buzz\LaravelGoogleCaptcha\CaptchaServiceProvider"
+php artisan vendor:publish --provider="Swap\Laravel\SwapServiceProvider"
+php artisan vendor:publish --provider="Gloudemans\Shoppingcart\ShoppingcartServiceProvider" --tag="config"
+php artisan vendor:publish --provider="Gloudemans\Shoppingcart\ShoppingcartServiceProvider" --tag="migrations"
+php artisan vendor:publish --provider="Intervention\Image\ImageServiceProviderLaravelRecent"
+php artisan config:publish intervention/image
+php artisan vendor:publish --provider="Maatwebsite\Excel\ExcelServiceProvider" --tag=config
+php artisan vendor:publish --provider="Spatie\DbSnapshots\DbSnapshotsServiceProvider" --tag="config"
+php artisan vendor:publish --provider="Spatie\LaravelImageOptimizer\ImageOptimizerServiceProvider"
+
+composer require barryvdh/laravel-debugbar --dev
+Barryvdh\Debugbar\ServiceProvider::class,
+'Debugbar' => Barryvdh\Debugbar\Facade::class,
+php artisan vendor:publish --provider="Barryvdh\Debugbar\ServiceProvider"
+
+composer require barryvdh/laravel-dompdf
+Barryvdh\DomPDF\ServiceProvider::class,
+'PDF' => Barryvdh\DomPDF\Facade::class,
+php artisan vendor:publish --provider="Barryvdh\DomPDF\ServiceProvider"
+
+composer require brian2694/laravel-toastr
+Brian2694\Toastr\ToastrServiceProvider::class,
+'Toastr'  => Brian2694\Toastr\Facades\Toastr::class,
+php artisan vendor:publish
+
+composer require buzz/laravel-google-captcha
+"require": {
+        "buzz/laravel-google-captcha": "2.*"
+    }
+'Buzz\LaravelGoogleCaptcha\CaptchaServiceProvider',
+php artisan vendor:publish --provider="Buzz\LaravelGoogleCaptcha\CaptchaServiceProvider"
+
+composer require php-http/curl-client nyholm/psr7 php-http/message florianv/laravel-swap
+Swap\Laravel\SwapServiceProvider::class
+'Swap' => Swap\Laravel\Facades\Swap::class
+php artisan vendor:publish --provider="Swap\Laravel\SwapServiceProvider"
+
+composer require gloudemans/shoppingcart
+composer require bumbummen99/shoppingcart
+Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class
+'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
+php artisan vendor:publish --provider="Gloudemans\Shoppingcart\ShoppingcartServiceProvider" --tag="config"
+php artisan vendor:publish --provider="Gloudemans\Shoppingcart\ShoppingcartServiceProvider" --tag="migrations"
+
+composer require intervention/image
+Intervention\Image\ImageServiceProvider::class
+'Image' => Intervention\Image\Facades\Image::class
+php artisan vendor:publish --provider="Intervention\Image\ImageServiceProviderLaravelRecent"
+php artisan config:publish intervention/image
+
+composer require maatwebsite/excel
+Maatwebsite\Excel\ExcelServiceProvider::class,
+'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+php artisan vendor:publish --provider="Maatwebsite\Excel\ExcelServiceProvider" --tag=config
+
+composer require spatie/laravel-db-snapshots
+app/config/filesystems.php
+'disks' => [
+    // ...
+    'snapshots' => [
+        'driver' => 'local',
+        'root' => database_path('snapshots'),
+    ],
+php artisan vendor:publish --provider="Spatie\DbSnapshots\DbSnapshotsServiceProvider" --tag="config"
+
+composer require spatie/laravel-image-optimizer
+php artisan vendor:publish --provider="Spatie\LaravelImageOptimizer\ImageOptimizerServiceProvider"
+// app/Http/Kernel.php
+protected $routeMiddleware = [
+   ...
+   'optimizeImages' => \Spatie\LaravelImageOptimizer\Middlewares\OptimizeImages::class,
+];
+
+
+
